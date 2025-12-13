@@ -1,0 +1,40 @@
+<h2>
+    {{uppskrift.nafn}} 
+</h2>
+
+{% if uppskrift.uppskrift %}
+<div>
+    <b>Innihald</b>
+    <div>
+        {{uppskrift.innihaldsefni|safe }}
+    </div>
+</div>
+{% endif %}
+
+{% if uppskrift.uppskrift %}
+<div>
+    <b>Aðferð</b>
+    <div>
+        {{uppskrift.uppskrift|safe }}
+    </div>
+</div>
+{% endif %}
+
+{% if uppskrift.athugasemdir%}
+<div>
+    <div>
+        <b>Athugasemdir</b>
+    <p>
+        {{uppskrift.athugasemdir}}
+    </p>
+    </div>
+</div>
+{% endif %}
+<div>
+    <b>Flokkar</b>
+    <div>
+    {% for flokkur in uppskrift.flokkar.all%}
+        <a href="/f/{{flokkur}}">{{flokkur}}</a>
+    {% endfor %}
+    </div>
+</div>

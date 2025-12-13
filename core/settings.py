@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'uppskrift',
     'flokkar',
-    'meðlimir'
+    'meðlimir',
+    'tinymce'
 ]
 
 MIDDLEWARE = [
