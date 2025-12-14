@@ -38,3 +38,12 @@
     {% endfor %}
     </div>
 </div>
+<div>
+    <b>Skoðanir</b>
+    <div>
+        {% for skodun in uppskrift.skodun_set.all %}
+            {{skodun.medlimur.nafn}}
+            {{skodun.get_skodun_display}}
+        {%endfor%}
+    </div>
+</div>
