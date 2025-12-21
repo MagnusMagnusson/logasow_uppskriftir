@@ -11,9 +11,10 @@ class Uppskrift(models.Model):
     slug = models.SlugField(max_length=64, null=False, unique=True)
     innihaldsefni = HTMLField(blank=True)
     uppskrift = HTMLField(blank=True)
-    athugasemdir = models.TextField()
-    flokkar = models.ManyToManyField(to=Flokkur)
-    skodanir = models.ManyToManyField(to=Meðlimur, through=skodun, related_name='medlimaskodanir')
+    uppruni = models.CharField(max_length=128, blank=True)
+    athugasemdir = models.TextField(blank=True)
+    flokkar = models.ManyToManyField(to=Flokkur, blank=True)
+    skodanir = models.ManyToManyField(to=Meðlimur, through=skodun, related_name='medlimaskodanir', blank=True)
 
     def __str__(self):
         return self.nafn
