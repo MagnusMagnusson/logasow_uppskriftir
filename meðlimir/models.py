@@ -1,8 +1,8 @@
 from django.db import models
 
-class Meðlimur(models.Model):
+class Medlimur(models.Model):
     class Meta:
-        verbose_name_plural = "Meðlimir"
+        verbose_name_plural = "Medlimir"
     id = models.AutoField(primary_key=True)
     nafn = models.CharField(max_length=64, null=False)
 
@@ -18,7 +18,7 @@ class skodun(models.Model):
             ELSKAR = '4', ('Elskar')
 
     id = models.AutoField(primary_key=True)
-    medlimur = models.ForeignKey(Meðlimur, on_delete=models.CASCADE)
+    medlimur = models.ForeignKey(Medlimur, on_delete=models.CASCADE)
     uppskrift = models.ForeignKey('uppskrift.Uppskrift', on_delete=models.CASCADE)
     skodun = models.CharField(max_length=1, choices=skodunarflokkur.choices, null=False)
     athugasemd = models.TextField()

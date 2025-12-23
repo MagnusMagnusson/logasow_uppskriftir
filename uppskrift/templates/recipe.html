@@ -47,7 +47,7 @@
     <b>Skoðanir</b>
     <div>
         {% for skodun in uppskrift.skodun_set.all %}
-            {{skodun.meðlimir.nafn}}
+            {{skodun.medlimir.nafn}}
             {{skodun.get_skodun_display}}
         {%endfor%}
     </div>
