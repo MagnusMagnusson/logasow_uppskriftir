@@ -1,6 +1,11 @@
+{% extends 'master.html' %}
+
+{% block body %}
+
 <h2>
     {{uppskrift.nafn}} 
 </h2>
+<small>{{uppskrift.uppruni}}</small>
 
 {% if uppskrift.uppskrift %}
 <div>
@@ -42,8 +47,10 @@
     <b>Skoðanir</b>
     <div>
         {% for skodun in uppskrift.skodun_set.all %}
-            {{skodun.medlimur.nafn}}
+            {{skodun.meðlimir.nafn}}
             {{skodun.get_skodun_display}}
         {%endfor%}
     </div>
 </div>
+
+{% endblock %}

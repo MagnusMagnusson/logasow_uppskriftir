@@ -1,13 +1,21 @@
-<h1>
-    Uppskriftir Logasow
-</h1>
-<div>
-    {% for flokkur in grouped_uppskriftir %}
-        <h3>{{flokkur.name}}</h3>
-        <div>
-            {% for uppskrift in flokkur.uppskriftir %}
-                <a href="/u/{{uppskrift.slug}}">{{uppskrift.nafn}}</a>
-            {% endfor %}
-        </div>
-    {%endfor%}
-</div>
+{% extends 'master.html' %}
+
+{% block body %}
+    <h1>
+        Uppskriftir Logasow
+    </h1>
+    <div>
+        {% for flokkur in grouped_uppskriftir %}
+            <h3>{{flokkur.name}}</h3>
+            <div>
+                <ul>
+                {% for uppskrift in flokkur.uppskriftir %}
+                    <li>
+                        <a href="/u/{{uppskrift.slug}}">{{uppskrift.nafn}}</a>
+                    </li>
+                {% endfor %}
+                </ul>
+            </div>
+        {%endfor%}
+    </div>
+{% endblock %}
