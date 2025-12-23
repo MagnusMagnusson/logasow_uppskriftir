@@ -1,3 +1,5 @@
+{% load static %}
+
 <html>
     <head>
         <title>
@@ -5,9 +7,12 @@
                 Uppskriftabók Logasow
             {% endblock %}
         </title>
+        <link rel="stylesheet" href="{% static 'css/master.css' %}"/>
+        {% block css %}
+        {% endblock %}
+        
     </head>
     <body>
-        aaaaa
         {% block body %}
         {% endblock %}
     </body>
