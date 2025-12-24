@@ -18,5 +18,19 @@
 
 .recipe-link a{
     transition: background-color 50ms ease-in-out;
+}
 
+#uppskriftir{
+    display:flex;
+    flex-wrap: wrap;
+    text-align: center;
+}
+
+.flokk-container{
+    width:45%;
+}
+
+ul{
+    margin:0;
+    padding:0;
 }

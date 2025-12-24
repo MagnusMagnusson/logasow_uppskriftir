@@ -6,6 +6,9 @@
 {% block css %}<link rel="stylesheet" href="{% static 'uppskrift/css/index.css' %}"/>{% endblock %}
 
 {% block body %}
+    <div>
+        Raða eftir: <a href="/">Bókstaf</a>, <a href="?sort=flokkur">Flokki</a>,  <a href="?sort=yfirflokkur">Yfirflokki</a>
+    </div>
     <div id="uppskriftir">
         {% for flokkur in grouped_uppskriftir %}
             <div class="flokk-container">
