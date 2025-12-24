@@ -17,6 +17,7 @@
 }
 
 .recipe-link a{
+    color:black;
     transition: background-color 50ms ease-in-out;
 }
 
