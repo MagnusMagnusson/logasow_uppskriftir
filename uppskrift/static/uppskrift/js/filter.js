@@ -1,4 +1,4 @@
-function setupHandlers(){
+function setupFilters(){
     $("#flokkar input").on('input', e => {
         console.log('selected');
         const data = e.target.value;
@@ -6,16 +6,15 @@ function setupHandlers(){
             return $("#flokkar input:checkbox:checked").map(function(){ return this.value; }).get();
         }
 
-        function fetchFiltered(categories){
+        function fetchFiltered(categories, query = ""){
             // Sends categories as repeated query params: ?flokkar=cat1&flokkar=cat2
             return $.ajax({
                 url: '/u/api/filter/',
                 method: 'GET',
                 dataType: 'json',
-                data: { flokkar: categories },
+                data: { flokkar: categories, q : query },
                 traditional: true
             }).then(function(response){
-                console.log("r", response);
                 if(response.results){
                     return response.results;
                 }
@@ -25,14 +24,13 @@ function setupHandlers(){
             });
         }
 
-
         const debouncedFetch = (function(){
             let timer = null;
-            return function(categories){
+            return function(categories, query){
                 return new Promise(resolve => {
                     clearTimeout(timer);
                     timer = setTimeout(() => {
-                        fetchFiltered(categories).then(resolve);
+                        fetchFiltered(categories, query).then(resolve);
                     }, 150);
                 });
             };
@@ -46,32 +44,59 @@ function setupHandlers(){
                 
             $("#uppskriftir li").hide();
             for(let id of ids){
-                console.log(id)
                 $(`#uppskriftir li[data-id="${id}"]`).show();
             }
             $(".flokk-container").show();
             let lists = $("#uppskriftir ul");
             for(let list of lists){
-                console.log(list);
-                console.log($(list).children(':visible').length)
                 if($(list).children(':visible').length == 0){
-                    console.log("HIDE!");
-                    console.log($(list).parent())
                     $(list).parent().hide();
                 }
             }
         }
 
-        // This is the code that runs when any checkbox changes (replace the placeholder)
         const selected = getSelectedCategories();
-        debouncedFetch(selected).then(results => {
+        const query = $("#searchbar").val();
+        debouncedFetch(selected, query).then(results => {
             let ids = results.map(x => x.id);
             applyFilter(ids);
         });
     })
 }
 
+function setupRandomSelect(){
+    var target = null;
+    function pickRandom(iterations){
+        console.log("pickrandom", iterations);
+        if(iterations <= 0){
+            setTimeout(() => {
+                let href = $(target).attr('href');
+                window.location.href = href;
+            }, 1000);
+            return;
+        }
+        let visible = $(".flokk-container li a:visible").not(".highlight");
+        $(".highlight").removeClass("highlight");
+        
+        if(visible.length > 0){
+            if(!target && visible.length === 1){
+                return;
+            }
+            target = visible[Math.floor(Math.random() * visible.length)];
+            $(target).addClass("highlight");
+            setTimeout(() => {
+                pickRandom(iterations - 1);
+            }, 1500 / 7);
+        }
+    }
+    $("#random-pick").on('click touchstart', e => {
+        if(!target){
+            pickRandom(7);
+        }
+    })
+}
+
 $(document).ready(e => {
-    console.log("Redz");
-    setupHandlers();
+    setupFilters();
+    setupRandomSelect();
 });

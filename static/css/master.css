@@ -23,7 +23,7 @@ li{
 #flokkar{
     display:inline-block;
     height : 100%;
-    width:150px;
+    width:250px;
     border-right:1px solid black;
 }
 
@@ -31,3 +31,4 @@ li{
     margin: 0;
     padding: 15;
 }
+

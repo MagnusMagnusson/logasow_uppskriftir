@@ -3,6 +3,7 @@
 
 {% block scripts %}<script src="{% static 'uppskrift/js/filter.js' %}"></script>{% endblock %}
 {% block headline%}Uppskriftir Logasow{% endblock %}
+{% block css %}<link rel="stylesheet" href="{% static 'uppskrift/css/index.css' %}"/>{% endblock %}
 
 {% block body %}
     <div id="uppskriftir">
@@ -11,7 +12,7 @@
                 <h3>{{flokkur.name}}</h3>
                 <ul>
                 {% for uppskrift in flokkur.uppskriftir %}
-                    <li data-id="{{uppskrift.id}}">
+                    <li class="recipe-link" data-id="{{uppskrift.id}}">
                         <a href="/u/{{uppskrift.slug}}">{{uppskrift.nafn}}</a>
                     </li>
                 {% endfor %}
@@ -25,14 +26,19 @@
 {% block navbar %}
     {%if flokkar %}
         <div id="flokkar">
-            <b>FLokkar</b>
-            <ul>
-            {%for flokkur in flokkar%}
-                <li>
-                    <input type="checkbox" value="{{flokkur.nafn}}"/>{{flokkur.nafn}}
-                </li>
-            {% endfor %}
-            </ul>
+            <input id="searchbar" placeholder="Leita að uppskrift"/>
+            <button id="random-pick">Velja úr Handraðanum</button>
+
+            <div>
+                <b>Flokkar</b>
+                <ul>
+                {%for flokkur in flokkar%}
+                    <li>
+                        <input type="checkbox" value="{{flokkur.nafn}}"/>{{flokkur.nafn}}
+                    </li>
+                {% endfor %}
+                </ul>
+            </div>
         </div>
     {% endif %}
 {% endblock %}
