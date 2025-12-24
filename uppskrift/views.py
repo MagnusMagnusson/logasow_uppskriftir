@@ -1,6 +1,10 @@
 from django.shortcuts import render
 from .models import Uppskrift
 from .models import Flokkur
+from django.http import JsonResponse
+from django.db.models import Q, CharField, TextField
+from tinymce.models import HTMLField
+import re
 
 def get_grouped_uppskriftir(by_yfirflokkur = True):
     flokk_groups = []
@@ -28,6 +32,7 @@ def get_grouped_by_letter_uppskriftir():
     flokk_groups = []
     from string import ascii_uppercase
 
+
     for letter in ascii_uppercase:
         uppskriftir_qs = Uppskrift.objects.filter(nafn__istartswith=letter).order_by('nafn')
         if uppskriftir_qs.exists():
@@ -44,9 +49,39 @@ def index(request):
     else:
         flokk_groups = get_grouped_by_letter_uppskriftir()
 
+    flokkar = Flokkur.objects.all().order_by('nafn')
 
-    return render(request, './index.html', {'grouped_uppskriftir': flokk_groups})
+    return render(request, './index.html', {'grouped_uppskriftir': flokk_groups, 'flokkar': flokkar, 'current_sort': querystring_sort})
 
 def recipe_detail(request, slug):
     uppskrift = Uppskrift.objects.get(slug=slug)
     return render(request, './recipe.html', {'uppskrift': uppskrift})
+
+
+
+def recipe_filter(request):
+    search_query = request.GET.get('q', '').strip()
+    flokkar = request.GET.getlist('flokkar')
+    print(flokkar)
+
+    filters = Q()
+    if search_query:
+        filters &= (Q(nafn__icontains=search_query) |
+                    Q(innihaldsefni__icontains=search_query) |
+                    Q(uppskrift__icontains=search_query) |
+                    Q(athugasemdir__icontains=search_query))
+    if flokkar:
+        filters &= Q(flokkar__nafn__in=flokkar)
+
+    print(filters)
+    filtered_uppskriftir = Uppskrift.objects.filter(filters).distinct().order_by('nafn')
+
+    results = []
+    for uppskrift in filtered_uppskriftir:
+        results.append({
+            'nafn': uppskrift.nafn,
+            'slug': uppskrift.slug,
+            'id': uppskrift.id
+        })
+
+    return JsonResponse({'results': results})

@@ -1,3 +1,33 @@
 html{
     background-color: #fffcf0;
 }
+
+header{
+    border-bottom: 1px solid gray;
+}
+
+li{
+    list-style: none;
+}
+
+#body{
+    display:flex;
+}
+
+#content{
+    width: 85%;
+    display:inline-block;
+    margin-left:15px;
+}
+
+#flokkar{
+    display:inline-block;
+    height : 100%;
+    width:150px;
+    border-right:1px solid black;
+}
+
+#flokkar ul{
+    margin: 0;
+    padding: 15;
+}

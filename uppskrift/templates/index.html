@@ -1,16 +1,17 @@
 {% extends 'master.html' %}
+{% load static %}
+
+{% block scripts %}<script src="{% static 'uppskrift/js/filter.js' %}"></script>{% endblock %}
+{% block headline%}Uppskriftir Logasow{% endblock %}
 
 {% block body %}
-    <h1>
-        Uppskriftir Logasow
-    </h1>
-    <div>
+    <div id="uppskriftir">
         {% for flokkur in grouped_uppskriftir %}
-            <h3>{{flokkur.name}}</h3>
-            <div>
+            <div class="flokk-container">
+                <h3>{{flokkur.name}}</h3>
                 <ul>
                 {% for uppskrift in flokkur.uppskriftir %}
-                    <li>
+                    <li data-id="{{uppskrift.id}}">
                         <a href="/u/{{uppskrift.slug}}">{{uppskrift.nafn}}</a>
                     </li>
                 {% endfor %}
@@ -18,4 +19,20 @@
             </div>
         {%endfor%}
     </div>
+{% endblock %}
+
+
+{% block navbar %}
+    {%if flokkar %}
+        <div id="flokkar">
+            <b>FLokkar</b>
+            <ul>
+            {%for flokkur in flokkar%}
+                <li>
+                    <input type="checkbox" value="{{flokkur.nafn}}"/>{{flokkur.nafn}}
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
 {% endblock %}

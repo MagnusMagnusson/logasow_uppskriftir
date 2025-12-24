@@ -18,6 +18,8 @@ from django.contrib import admin
 from django.urls import path, include
 from uppskrift.urls import urlpatterns as uppskrift_patterns
 from uppskrift.views import index
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 urlpatterns = [
@@ -27,3 +29,4 @@ urlpatterns = [
     path('u/', include(uppskrift_patterns)),
     path("", index)
 ]
+

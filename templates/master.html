@@ -10,10 +10,40 @@
         <link rel="stylesheet" href="{% static 'css/master.css' %}"/>
         {% block css %}
         {% endblock %}
-        
+        <script   src="https://code.jquery.com/jquery-3.7.1.min.js"   integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="   crossorigin="anonymous"></script>
+        {% block scripts %}
+        {% endblock %}
+
     </head>
     <body>
-        {% block body %}
-        {% endblock %}
+        <header id="headline">
+            <h2>
+                {% block headline %}
+                {% endblock %}
+            </h2>
+        </header>
+        <div id="body">
+            {% block navbar %}
+                {%if flokkar %}
+                    <div id="flokkar">
+                        <b>FLokkar</b>
+                        <ul>
+                        {%for flokkur in flokkar%}
+                            <li>
+                                <a href="/f/{{flokkur}}">{{flokkur.nafn}}</a>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            {% endblock %}
+
+            <div id="content">
+            {% block body %}
+            {% endblock %}
+            </div>
+
+            
+        </div>
     </body>
 </html>
